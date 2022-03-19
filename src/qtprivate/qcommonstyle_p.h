@@ -46,7 +46,7 @@
 
 #include <QtWidgets/private/qtwidgetsglobal_p.h>
 #include "qcommonstyle.h"
-#include <QtWidgets/private/qstyle_p.h>
+#include "qstyle_p.h"
 #if QT_CONFIG(animation)
 #include "qstyleanimation_p.h"
 #endif
@@ -75,7 +75,7 @@ class Q_WIDGETS_EXPORT QCommonStylePrivate : public QStylePrivate
 public:
     inline QCommonStylePrivate() :
 #if QT_CONFIG(itemviews)
-    cachedOption(0),
+    cachedOption(nullptr),
 #endif
     animationFps(30)
     { }
@@ -116,7 +116,8 @@ public:
                && option.features == cachedOption->features
                && option.icon.isNull() == cachedOption->icon.isNull()
                && option.font == cachedOption->font
-               && option.viewItemPosition == cachedOption->viewItemPosition);
+               && option.viewItemPosition == cachedOption->viewItemPosition
+               && option.showDecorationSelected == cachedOption->showDecorationSelected);
     }
 #endif
 #if QT_CONFIG(toolbutton)
@@ -126,7 +127,7 @@ public:
 
     mutable QIcon tabBarcloseButtonIcon;
 #if QT_CONFIG(tabbar)
-    void tabLayout(const QStyleOptionTab *opt, const QWidget *widget, QRect *textRect, QRect *pixmapRect) const;
+    virtual void tabLayout(const QStyleOptionTab *opt, const QWidget *widget, QRect *textRect, QRect *pixmapRect) const;
 #endif
 
     int animationFps;
